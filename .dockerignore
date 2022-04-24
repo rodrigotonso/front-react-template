@@ -1,0 +1,10 @@
+# Should ignore this things...
+.git
+.results
+scripts
+Dockerfile
+dockerfile
+.dockerignore
+build
+.pem
+#.env 

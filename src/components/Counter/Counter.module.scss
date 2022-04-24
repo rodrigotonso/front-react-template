@@ -1,0 +1,38 @@
+@use 'scss/variables/colors' as colors;
+@use 'scss/utils/containers' as containers;
+@use 'scss/variables/fontSizes' as fontSizes;
+@use 'scss/variables/mediaQuerySizes' as mediaQuerySizes;
+
+.mainContainer {
+  padding-top: 50px;
+  @include containers.center-horizontal;
+  @include containers.set-width(300px);
+
+  .container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 40px;
+    @include containers.full-container-width;
+    @include containers.set-height(300px);
+
+    .counterNumber {
+      font-size: fontSizes.$giant;
+      margin-bottom: 30px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .buttonGroup {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      @include containers.set-width(100%);
+
+      .inputByAmount {
+        margin: 0 12px;
+      }
+    }
+  }
+}

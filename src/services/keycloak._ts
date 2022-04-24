@@ -1,0 +1,41 @@
+/**
+ * @packageDocumentation
+ * @module Services/Keycloak
+ * Interacts with the Keycloak service.
+ */
+import type { KeycloakInstance } from 'keycloak-js';
+
+import { CONFIG } from '~/config';
+
+let keycloak: KeycloakInstance;
+if (typeof window !== 'undefined') {
+  // eslint-disable-next-line global-require
+  const Keycloak = require('keycloak-js');
+  keycloak = new (Keycloak as any)({
+    url: CONFIG.SERVICES.KEYCLOAK.AUTH_SERVER_URL,
+    realm: CONFIG.SERVICES.KEYCLOAK.REALM,
+    clientId: CONFIG.SERVICES.KEYCLOAK.RESOURCE,
+  });
+}
+
+/**
+ * Interacts with the Keycloak service.
+ */
+export const keycloakService = {
+  initKeycloak: async (onAuthenticatedCallback: any) => {
+    try {
+      const authenticated = await keycloak.init({ onLoad: 'login-required' /* or 'check-sso' */ });
+      if (authenticated) onAuthenticatedCallback();
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`Error: ${error}`);
+    }
+  },
+  doLogin: () => keycloak.login(),
+  doLogout: () => keycloak.logout(),
+  getToken: () => (keycloak.token ? keycloak.token : ''),
+  getInstance: () => keycloak,
+  isLoggedIn: () => !!keycloakService.getToken(),
+  updateToken: (successCallback: any) => keycloak.updateToken(5).then(successCallback).catch(keycloakService.doLogin),
+  getTokenParsed: () => keycloak.tokenParsed,
+};

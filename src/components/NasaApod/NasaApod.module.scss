@@ -1,0 +1,62 @@
+@use 'scss/utils/containers' as containers;
+@use 'scss/variables/fontSizes' as fontSizes;
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    padding-top: 50px;
+  }
+
+  .dateInput {
+    margin: 40px 0;
+  }
+
+  .wrapper {
+    .spinner {
+      margin-top: 100px;
+    }
+
+    .titleParagraph {
+      margin: 10px 0;
+      text-align: center;
+
+      .title {
+        font-size: fontSizes.$large;
+        font-weight: 500;
+      }
+
+      .copyright {
+        font-weight: 500;
+      }
+    }
+
+    .image {
+      @include containers.set-height(auto);
+      @include containers.set-width(100%);
+    }
+
+    .videoContainer {
+      height: 0;
+      padding-bottom: 56.25%;
+      position: relative;
+      width: 100%;
+
+      .video {
+        border: none;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+    }
+
+    .explanation {
+      font-size: fontSizes.$large;
+      margin-top: 15px;
+    }
+  }
+}

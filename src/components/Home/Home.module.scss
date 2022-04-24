@@ -1,0 +1,27 @@
+@use 'scss/utils/containers' as containers;
+@use 'scss/variables/fontSizes' as fontSizes;
+@use 'scss/variables/mediaQuerySizes' as mediaQuerySizes;
+
+.container {
+  .title {
+    padding: 50px;
+  }
+
+  .description {
+    @media #{mediaQuerySizes.$mobile} {
+      color: #01579b;
+    }
+
+    @media #{mediaQuerySizes.$small-mobile} {
+      color: #e53935;
+    }
+
+    @media #{mediaQuerySizes.$tablet} {
+      color: #43a047;
+    }
+
+    @media #{mediaQuerySizes.$desktop} {
+      color: #455a64;
+    }
+  }
+}

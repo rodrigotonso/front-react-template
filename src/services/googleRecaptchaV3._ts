@@ -1,0 +1,66 @@
+/**
+ * @packageDocumentation
+ * @module Services/GoogleRecaptchaV3
+ * Interacts with the Dictamenes service.
+ */
+import { isUndefined } from 'lodash';
+
+import { CONFIG } from '~/config';
+
+/**
+ * Interacts with the Google Recaptcha v3.
+ */
+class GoogleRecaptchaV3 {
+  private _scriptAdded = false;
+
+  private _secretKey = CONFIG.SERVICES.GOOGLE_CAPTCHA.SITE_KEY;
+
+  /**
+   * Adds the script to the document.
+   */
+  async addScript(): Promise<boolean> {
+    if (this._scriptAdded) {
+      return true;
+    }
+
+    if (isUndefined(document)) {
+      throw new Error('Cannot find Document object...');
+    }
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = `https://www.google.com/recaptcha/api.js?render=${this._secretKey}`;
+      script.async = false;
+      script.addEventListener('load', () => resolve(true));
+      script.addEventListener('error', (error) => reject(error));
+      document.body.appendChild(script);
+      this._scriptAdded = true;
+    });
+  }
+
+  /**
+   * Verifies with the Google backend.
+   */
+  async verify(action: string): Promise<string> {
+    try {
+      if (!this._scriptAdded) {
+        throw new Error('Google Recaptcha Script is not added! Use it in the useEffect() of the app file.');
+      }
+
+      const tmpWindow = window as any;
+      if (isUndefined(tmpWindow) || isUndefined(tmpWindow.grecaptcha) || isUndefined(tmpWindow.grecaptcha.execute)) {
+        throw new Error('Cannot find Google Recaptcha on windows!');
+      }
+
+      if (isUndefined(document)) {
+        throw new Error('Cannot find Document object...');
+      }
+
+      const token = await tmpWindow.grecaptcha.execute(this._secretKey, { action });
+      return token;
+    } catch (error) {
+      throw error;
+    }
+  }
+}
+
+export default new GoogleRecaptchaV3();

@@ -1,0 +1,17 @@
+.formContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .radioCheckboxContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .buttonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 32px;
+  }
+}

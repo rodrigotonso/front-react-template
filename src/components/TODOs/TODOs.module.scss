@@ -1,0 +1,48 @@
+@use 'scss/utils/containers' as containers;
+
+.container {
+  @include containers.center-horizontal;
+  max-width: 400px;
+  min-width: 300px;
+
+  .title {
+    padding-top: 50px;
+  }
+
+  .card {
+    margin-top: 40px;
+    @include containers.full-container-width;
+  }
+
+  .addTodoCardContent {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+
+    .form {
+      @include containers.full-container-width;
+
+      .input {
+        margin-top: 20px;
+        @include containers.full-container-width;
+      }
+
+      .buttonGroup {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        @include containers.full-container-width;
+
+        .button {
+          margin-top: 30px;
+        }
+      }
+    }
+  }
+
+  .todoListCardContent {
+    .emptyList {
+      margin-top: 20px;
+    }
+  }
+}
